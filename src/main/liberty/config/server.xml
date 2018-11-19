@@ -24,7 +24,7 @@ and open the template in the editor.
     <!-- Automatically expand WAR files and EAR files -->
     <applicationManager autoExpand="true"/>
 
-    <applicationMonitor pollingRate="1000ms"/>
+    <applicationMonitor pollingRate="1000ms" dropinsEnabled="false"/>
 
     <webApplication name="BiStudio" location="${app.location}"/>
 </server>
