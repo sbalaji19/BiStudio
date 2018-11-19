@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+
+
+<server description="BiStudio Server">
+    <featureManager>        
+        <feature>jaxrs-2.0</feature>
+    </featureManager>
+
+    <httpEndpoint httpPort="${default.http.port}" httpsPort="${default.https.port}"
+                  id="defaultHttpEndpoint" host="*" />
+
+    <keyStore id="defaultKeyStore"/>
+
+    <basicRegistry id="basic" realm="ibm/api">
+        <user name="guest" password="password" />
+    </basicRegistry>
+
+
+    <!-- Automatically expand WAR files and EAR files -->
+    <applicationManager autoExpand="true"/>
+
+    <applicationMonitor pollingRate="1000ms"/>
+
+    <webApplication name="BiStudio" location="${app.location}"/>
+</server>
