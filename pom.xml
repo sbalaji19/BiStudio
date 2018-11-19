@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.bs</groupId>
-    <artifactId>BiStudio</artifactId>
+    <artifactId>bi-studio</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
@@ -20,11 +20,11 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <liberty.plugin.version>2.6.1</liberty.plugin.version>
-        <app.name>BiStudio</app.name>
-        <testServerHttpPort>9080</testServerHttpPort>
-        <testServerHttpsPort>9443</testServerHttpsPort>
-        <warContext>${app.name}</warContext>
+        <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>        
+        <openliberty.runtime.version>18.0.0.3</openliberty.runtime.version>   
+        <server.http.port>9080</server.http.port>
+        <server.https.port>9443</server.https.port>
+        <warContext>/bi</warContext>
         <package.file>${project.build.directory}/${project.artifactId}-${project.version}.zip</package.file>
         <packaging.type>usr</packaging.type>       
     </properties>
@@ -36,11 +36,28 @@
             <version>8.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.faces</artifactId>
+            <version>2.4.0</version>
+        </dependency>
     </dependencies>
 
     <build>
         <finalName>${project.artifactId}</finalName>        
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <compilerArguments>
+                        <endorseddirs>${endorsed.dir}</endorseddirs>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
@@ -58,25 +75,20 @@
                     <assemblyArtifact>
                         <groupId>io.openliberty</groupId>
                         <artifactId>openliberty-runtime</artifactId>
-                        <version>[18.0.0.1,)</version>
+                        <version>${openliberty.runtime.version}</version>
                         <type>zip</type>
                     </assemblyArtifact>
-                    <configFile>${basedir}/src/main/liberty/config/server.xml</configFile>
-                    <!-- serverEnv>${basedir}/src/main/liberty/config/server.env</serverEnv>
-                    <jvmOptionsFile>${basedir}/src/main/liberty/config/jvm.options</jvmOptionsFile -->
+                    <serverName>${project.artifactId}</serverName>
+                    <stripVersion>true</stripVersion>
+                    <configFile>src/main/liberty/config/server.xml</configFile>
                     <packageFile>${package.file}</packageFile>
                     <include>${packaging.type}</include>
                     <bootstrapProperties>
-                        <app.location>${project.build.directory}/${project.artifactId}.war</app.location>
-                        <default.http.port>${testServerHttpPort}</default.http.port>
-                        <default.https.port>${testServerHttpsPort}</default.https.port>
-                        <app.context.root>${project.artifactId}</app.context.root>
+                        <default.http.port>${server.http.port}</default.http.port>
+                        <default.https.port>${server.https.port}</default.https.port>
+                        <app.location>${project.artifactId}.war</app.location>
+                        <app.context.root>${warContext}</app.context.root>
                     </bootstrapProperties>
-                    <features>
-                        <acceptLicense>true</acceptLicense>
-                    </features>
-                    <looseApplication>false</looseApplication>
-                    <serverName>BiStudio</serverName>
                 </configuration>
                 <executions>
                     <execution>
@@ -88,17 +100,7 @@
                         <configuration>
                             <outputDirectory>target/wlp-package</outputDirectory>
                         </configuration>
-                    </execution>
-                     <execution>
-                        <id>clean</id>
-                        <phase>post-integration-test</phase>
-                        <goals>
-                            <goal>clean-server</goal>
-                        </goals>
-                        <configuration>
-                            <cleanDropins>true</cleanDropins>
-                        </configuration>
-                    </execution>
+                    </execution>                    
                 </executions>
             </plugin>
         </plugins>
