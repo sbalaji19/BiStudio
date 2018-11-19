@@ -67,7 +67,7 @@
                     <packageFile>${package.file}</packageFile>
                     <include>${packaging.type}</include>
                     <bootstrapProperties>
-                        <app.location>${project.artifactId}-${project.version}.war</app.location>
+                        <app.location>${project.build.directory}/${project.artifactId}.war</app.location>
                         <default.http.port>${testServerHttpPort}</default.http.port>
                         <default.https.port>${testServerHttpsPort}</default.https.port>
                         <app.context.root>${project.artifactId}</app.context.root>
@@ -76,6 +76,7 @@
                         <acceptLicense>true</acceptLicense>
                     </features>
                     <looseApplication>false</looseApplication>
+                    <serverName>BiStudio</serverName>
                 </configuration>
                 <executions>
                     <execution>
@@ -86,6 +87,16 @@
                         </goals>
                         <configuration>
                             <outputDirectory>target/wlp-package</outputDirectory>
+                        </configuration>
+                    </execution>
+                     <execution>
+                        <id>clean</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>clean-server</goal>
+                        </goals>
+                        <configuration>
+                            <cleanDropins>true</cleanDropins>
                         </configuration>
                     </execution>
                 </executions>
