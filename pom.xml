@@ -119,5 +119,6 @@
 
   <modules>
     <module>BiStudio-web</module>
+    <module>BiStudio-Spark-Services</module>
   </modules>
 </project>
