@@ -117,4 +117,7 @@
     </profiles>
 
 
+  <modules>
+    <module>BiStudio-web</module>
+  </modules>
 </project>
