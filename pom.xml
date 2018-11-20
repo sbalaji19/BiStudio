@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.bs</groupId>
-    <artifactId>bi-studio</artifactId>
+    <artifactId>bi-studio-web</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
-    <name>BiStudio</name>
+    <name>BiStudio-Web</name>
     
     <parent>
         <groupId>net.wasdev.wlp.maven.parent</groupId>
