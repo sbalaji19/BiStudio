@@ -6,6 +6,6 @@
         <artifactId>bi-studio</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>BiStudio-Spark-Services</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>BiStudio-services</artifactId>
+    <packaging>pom</packaging>
 </project>
